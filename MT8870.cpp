@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "MT8870.h"
 
 MT8870::MT8870(int Q1, int Q2, int Q3, int Q4, int STQ)
@@ -11,7 +10,7 @@ MT8870::MT8870(int Q1, int Q2, int Q3, int Q4, int STQ)
 	pinMode(STQ, INPUT);
 	
 	// Setup the Interrupt pin
-	attachInterrupt(digitalPinToInterrupt(STQ), MT8870::decode, LOW);
+	attachInterrupt(STQ, decode, LOW);
 	
 	// Keep track of the pin numbers
 	_Q1 = Q1;
@@ -21,7 +20,7 @@ MT8870::MT8870(int Q1, int Q2, int Q3, int Q4, int STQ)
 	_STQ = STQ;
 }
 
-void MT8870::decode()
+static void MT8870::decode()
 {	
 	int dtmf = 0;
 
@@ -45,7 +44,7 @@ void MT8870::decode()
 		dtmf += 8;
 	}
 	
-	_dtmf_key = dtmf;
+	MT8870::_dtmf_key = dtmf;
 	
 }
 

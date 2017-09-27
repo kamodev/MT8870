@@ -1,7 +1,13 @@
-#include "Arduino.h"
-
 #ifndef MT8870_h
 #define MT8870_h
+
+#if ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
+  #include "pins_arduino.h"
+  #include "WConstants.h"
+#endif
 
 class MT8870
 {
@@ -15,9 +21,10 @@ class MT8870
 		int _Q2;
 		int _Q3;
 		int _Q4;
-		int _dtmf_key = 0;
+		int _STQ;
+		int _dtmf_key;
 		
-		void decode();
+		static void decode();
 };
 
 #endif // MT8870_h
