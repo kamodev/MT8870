@@ -13,7 +13,8 @@ class MT8870
 {
 	public:
 		MT8870(int Q1, int Q2, int Q3, int Q4, int STQ);
-		int getDTMFValue();
+		bool hasDTMF();
+		int decode();
 		
 	private:
 		// All INT variables
@@ -22,9 +23,6 @@ class MT8870
 		int _Q3;
 		int _Q4;
 		int _STQ;
-		int _dtmf_key;
-		
-		static void decode();
 };
 
 #endif // MT8870_h

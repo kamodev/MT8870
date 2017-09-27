@@ -9,18 +9,15 @@ MT8870::MT8870(int Q1, int Q2, int Q3, int Q4, int STQ)
 	pinMode(Q4, INPUT);
 	pinMode(STQ, INPUT);
 	
-	// Setup the Interrupt pin
-	attachInterrupt(STQ, decode, LOW);
-	
 	// Keep track of the pin numbers
 	_Q1 = Q1;
 	_Q2 = Q2;
 	_Q3 = Q3;
 	_Q4 = Q4;
-	_STQ = STQ;
+	_STQ = STQ;	
 }
 
-static void MT8870::decode()
+int MT8870::decode()
 {	
 	int dtmf = 0;
 
@@ -44,11 +41,19 @@ static void MT8870::decode()
 		dtmf += 8;
 	}
 	
-	MT8870::_dtmf_key = dtmf;
+	return dtmf;
 	
 }
 
-int MT8870::getDTMFValue()
+bool MT8870::hasDTMF()
 {
-	return _dtmf_key;
+	bool has_DTMF = false;
+	
+	if (digitalRead(_STQ) == HIGH)
+	{
+		has_DTMF = true;
+	}
+	
+	return has_DTMF;
 }
+
